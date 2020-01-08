@@ -1,0 +1,24 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pyapp
+spec:
+  # minReadySeconds: 30
+  selector:
+    matchLabels:
+      app: pyapp
+  replicas: 2
+  template: # template for the pods
+    metadata:
+      labels:
+        app: pyapp
+    spec:
+      containers:
+      - name: pyapp
+        image: ysainadh/my-python-app-v2
+        env:
+          - name: MY_POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
